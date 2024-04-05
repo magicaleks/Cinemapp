@@ -1,0 +1,36 @@
+services:
+  
+  app:
+    container_name: "Cinemapp"
+    build: .
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - "mongodb"
+      - "redis"
+
+  mongodb:
+    image: mongo
+    container_name: "Mongodb"
+    restart: always
+    ports:
+      - "27012:27012"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "example"
+    
+  redis:
+    image: redis
+    container_name: "Redis"
+    restart: always
+    ports:
+      # - "6379:6379"
+      - "7000:7000"
+    volumes:
+      - /data:/root/redis
+    environment:
+      REDIS_PASSWORD: "example"
+      REDIS_PORT: 7000
+      REDIS_DATABASES: 2
+  
